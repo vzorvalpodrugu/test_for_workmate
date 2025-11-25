@@ -30,7 +30,7 @@ Mike Brown,QA Engineer,41,4.5,"Selenium, Jest, Cypress, Postman",Testing Team,4
         try:
             data = read_csv_file([file_path])
 
-            assert len(data) == 2
+            assert len(data) == 5
             assert data[0]['name'] == 'Alex Ivanov'
             assert data[0]['position'] == 'Backend Developer'
             assert data[0]['completed_tasks'] == 45

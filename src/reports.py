@@ -35,15 +35,18 @@ class PerformanceReport(Report):
         return:
             List[Dict[str, Any]]: Sorted report
         """
-        position_stats: {}
+        position_stats = {}
 
         for employee in data:
+            if 'position' not in employee or 'performance' not in employee:
+                continue
+
             position = employee["position"]
             performance = employee["performance"]
 
             if position not in position_stats:
                 position_stats[position] = {
-                    'performance_sum': 0,
+                    'performance_sum': 0.0,
                     'count': 0
                 }
 
@@ -52,19 +55,19 @@ class PerformanceReport(Report):
 
         report_data = []
         for position, stats in position_stats.items():
-            avg_performance = stats['performance_sum'] / stats['count']
+            average_performance = stats['performance_sum'] / stats['count']
             report_data.append({
                 'position': position,
-                'avg_performance': round(avg_performance, 2),
+                'average_performance': round(average_performance, 2),
                 'employee_count': stats['count']
             })
 
-        report_data.sort(key=lambda x: x['avg_performance'], reverse=True)
+        report_data.sort(key=lambda x: x['average_performance'], reverse=True)
 
         return report_data
 
     def get_name(self):
-        return "Performance Report"
+        return "performance"
 
 class ReportFactory:
     """
@@ -85,7 +88,7 @@ class ReportFactory:
         """
         if report_name not in cls._reports:
             available_reports = ', '.join(cls._reports.keys())
-            raise Exception(
+            raise ValueError(
                 f'Report named "{report_name}" not found, but has been added in the list. Now available reports: {available_reports}'
             )
 
@@ -108,5 +111,14 @@ class ReportFactory:
     def get_available_report(cls) -> List[str]:
         """
         Return list of available reports
+        """
+        return list(cls._reports.keys())
+
+    @classmethod
+    def get_available_reports(cls) -> list:
+        """
+        Get list of available report names
+
+        :return: list of report names
         """
         return list(cls._reports.keys())
