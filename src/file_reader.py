@@ -23,6 +23,8 @@ def read_csv_file(file_paths: List[str]) -> List[Dict[str,Any]]:
                         row['performance'] = float(row['performance'])
                     if 'expirience_years' in row:
                         row['expirience_years'] = int(row['expirience_years'])
+                    if 'experience_years' in row and row['experience_years']:
+                        row['experience_years'] = int(row['experience_years'])
 
                     all_data.append(row)
         except FileNotFoundError:
