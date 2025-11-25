@@ -22,9 +22,9 @@ class Report(ABC):
     def get_name(self):
         pass
 
-class PerfomanceReport(Report):
+class PerformanceReport(Report):
     """
-    Perfomance report class
+    Performance report class
     """
     def generate_report(self, data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """
@@ -39,39 +39,39 @@ class PerfomanceReport(Report):
 
         for employee in data:
             position = employee["position"]
-            perfomance = employee["perfomance"]
+            performance = employee["performance"]
 
             if position not in position_stats:
                 position_stats[position] = {
-                    'perfomance_sum': 0,
+                    'performance_sum': 0,
                     'count': 0
                 }
 
-            position_stats[position]['perfomance_sum'] += perfomance
+            position_stats[position]['performance_sum'] += performance
             position_stats[position]['count'] += 1
 
         report_data = []
         for position, stats in position_stats.items():
-            avg_perfomance = stats['perfomance_sum'] / stats['count']
+            avg_performance = stats['performance_sum'] / stats['count']
             report_data.append({
                 'position': position,
-                'avg_perfomance': round(avg_perfomance, 2),
+                'avg_performance': round(avg_performance, 2),
                 'employee_count': stats['count']
             })
 
-        report_data.sort(key=lambda x: x['avg_perfomance'], reverse=True)
+        report_data.sort(key=lambda x: x['avg_performance'], reverse=True)
 
         return report_data
 
     def get_name(self):
-        return "Perfomance Report"
+        return "Performance Report"
 
 class ReportFactory:
     """
     Fabric for creating reports
     """
     _reports = {
-        'perfomance': PerfomanceReport,
+        'performance': PerformanceReport,
     }
 
     @classmethod

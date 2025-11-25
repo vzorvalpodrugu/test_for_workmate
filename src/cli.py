@@ -12,8 +12,8 @@ def main():
         formatter_class = argparse.RawDescriptionHelpFormatter,
         epilog="""
         Examples usage:
-        python -m src.cli --files data1.csv data2.csv --report perfomance
-        python -m src.cli -f employees.csv -r perfomance
+        python -m src.cli --files data1.csv data2.csv --report performance
+        python -m src.cli -f employees.csv -r performance
         """
     )
 
