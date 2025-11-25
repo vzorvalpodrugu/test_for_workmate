@@ -65,3 +65,48 @@ class PerfomanceReport(Report):
 
     def get_name(self):
         return "Perfomance Report"
+
+class ReportFactory:
+    """
+    Fabric for creating reports
+    """
+    _reports = {
+        'perfomance': PerfomanceReport,
+    }
+
+    @classmethod
+    def create_report(cls, report_name: str):
+        """
+        Create report instance by name
+        :param
+            report_name: name of report
+        :return:
+            report instance
+        """
+        if report_name not in cls._reports:
+            available_reports = ', '.join(cls._reports.keys())
+            raise Exception(
+                f'Report named "{report_name}" not found, but has been added in the list. Now available reports: {available_reports}'
+            )
+
+        return cls._reports[report_name]()
+
+    @classmethod
+    def register_report(cls, report_name: str, report_class):
+        """
+        Register new type of report
+        :param
+            report_name: report name
+            report_class: report class
+        """
+        if not issubclass(report_class, Report):
+            raise ValueError("Report class must be a subclass of Report")
+
+        cls._reports[report_name] = report_class
+
+    @classmethod
+    def get_available_report(cls) -> List[str]:
+        """
+        Return list of available reports
+        """
+        return list(cls._reports.keys())
