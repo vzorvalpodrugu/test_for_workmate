@@ -20,7 +20,7 @@ def read_csv_file(file_paths: List[str]) -> List[Dict[str,Any]]:
                     if 'completed_tasks' in row:
                         row['completed_tasks'] = int(row['completed_tasks'])
                     if 'performance' in row:
-                        row['performance'] = int(row['performance'])
+                        row['performance'] = float(row['performance'])
                     if 'expirience_years' in row:
                         row['expirience_years'] = int(row['expirience_years'])
 
